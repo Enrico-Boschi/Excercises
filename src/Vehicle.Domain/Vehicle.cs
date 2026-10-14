@@ -28,12 +28,12 @@ namespace Vehicle.Domain
         private double _fuelLevelPercentage;
 
         public string LicensePlate {
-            get { return _licensePlate}
+            get { return _licensePlate; }
             private set
             {
-                if (String.IsNullOrEmpty(value) || String.IsWhiteSpace(value) || value.Length == 7) 
+                if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length != 7) 
                 {
-                    throw new ArgumentException($"value not allowed {nameof(LicensePlate)}: {value} "))
+                    throw new ArgumentException($"value not allowed {nameof(LicensePlate)}: {value} ");
                 } else _licensePlate = value;
             } 
         }
