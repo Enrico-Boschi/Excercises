@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 using System.Formats.Tar;
 using System.Runtime.Serialization;
 using System.Text;
@@ -20,11 +22,21 @@ namespace Vehicle.Domain
     /// </summary>
     public class Vehicle
     {
+        private string _licensePlate;
         private int _odometerKm;
         private double _dailyRate;
         private double _fuelLevelPercentage;
 
-        public string LicensePlate { get; private set; }//@TODO: implentare il set per la validazione della targa
+        public string LicensePlate {
+            get { return _licensePlate}
+            private set
+            {
+                if (String.IsNullOrEmpty(value) || String.IsWhiteSpace(value) || value.Length == 7) 
+                {
+                    throw new ArgumentException($"value not allowed {nameof(LicensePlate)}: {value} "))
+                } else _licensePlate = value;
+            } 
+        }
         public int OdometerKm
         {
             get
@@ -100,7 +112,5 @@ namespace Vehicle.Domain
             OdometerKm += consumedKm; //chiamata al set
             FuelLevelPercentage -= consumedFuel; //chiamate set
         }
-
-
     }
 }
