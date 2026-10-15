@@ -31,9 +31,12 @@ namespace Vehicle.Domain
             get { return _licensePlate; }
             private set
             {
-                if (String.IsNullOrEmpty(value) || String.IsNullOrWhiteSpace(value) || value.Length != 7) 
+                if (String.IsNullOrEmpty(value) || value.Length != 7) 
                 {
                     throw new ArgumentException($"value not allowed {nameof(LicensePlate)}: {value} ");
+                } else if (char.IsLetter(value[0]) || char.IsLetter(value[1]) || char.IsLetter(value[5]) || char.IsLetter(value[6]) || char.IsDigit(value[2]) || char.IsDigit(value[3]))
+                { 
+                    throw new ArgumentException($"value not allowed {nameof(LicensePlate)}: {value} "); 
                 } else _licensePlate = value;
             } 
         }
@@ -73,6 +76,8 @@ namespace Vehicle.Domain
                 _fuelLevelPercentage = value;
             }
         }
+
+        public static double MaxFuelLevelPercentage { get; } = 100;
 
 
         /// <summary>
